@@ -218,9 +218,6 @@ static NSString* invokeAppMain(NSString *selectedApp, int argc, char *argv[]) {
     *path = appExecPath;
     overwriteExecPath(appBundle.bundlePath);
 
-    // Overwrite NSUserDefaults
-    NSUserDefaults.standardUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:appBundle.bundleIdentifier];
-
     // Overwrite NSBundle
     overwriteMainNSBundle(appBundle);
 
@@ -245,6 +242,9 @@ static NSString* invokeAppMain(NSString *selectedApp, int argc, char *argv[]) {
         NSString *dirPath = [newHomePath stringByAppendingPathComponent:dir];
         [fm createDirectoryAtPath:dirPath withIntermediateDirectories:YES attributes:nil error:nil];
     }
+
+    // Overwrite NSUserDefaults
+    NSUserDefaults.standardUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:appBundle.bundleIdentifier];
 
     // Preload executable to bypass RT_NOLOAD
     uint32_t appIndex = _dyld_image_count();
