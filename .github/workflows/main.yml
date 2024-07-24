@@ -1,0 +1,4 @@
+export THEOS=/path/to/theos
+git submodule init
+git submodule update
+make package
